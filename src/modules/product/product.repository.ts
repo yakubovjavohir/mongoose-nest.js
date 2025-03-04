@@ -3,6 +3,7 @@ import { ProductDocument, ProductEntity } from "./entities/product.entity";
 import { IProductRepository } from "./interface/user.repoistory";
 import { Model } from "mongoose";
 import { ID } from "src/common/types";
+import { UpdateProductDto } from "./dto/update-product.dto";
 
 
 export class ProductRepository implements IProductRepository {
@@ -12,14 +13,14 @@ export class ProductRepository implements IProductRepository {
         return data
     }
     async findAll(): Promise<Array<ProductEntity>> {
-        const data = await this.productModel.find()
+        const data = await this.productModel.find().populate("categoryId")
         return data
     }
     async nameExist(name: string): Promise<ProductEntity | null> {
         const data = await this.productModel.findOne({name})
         return data 
     }
-    async update(id: string, dto: ProductEntity): Promise<ProductEntity | null> {
+    async update(id: string, dto: UpdateProductDto): Promise<ProductEntity | null> {
         const data =  await this.productModel.findByIdAndUpdate(id, dto, { new: true });        
         return data
     }

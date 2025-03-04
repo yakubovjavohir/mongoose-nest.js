@@ -6,6 +6,8 @@ import { ProductEntity } from './entities/product.entity';
 import { ProductRepository } from './product.repository';
 import { NameExist, ProductNotFound } from './exception/error';
 import { ID } from 'src/common/types';
+import { Types } from 'mongoose';
+import { UpdateProductDto } from './dto/update-product.dto';
 
 @Injectable()
 export class ProductService implements IProductService{
@@ -15,7 +17,8 @@ export class ProductService implements IProductService{
     const filterData:ProductEntity = {
       name:dto.name,
       price:dto.price,
-      count:dto.count
+      count:dto.count,
+      categoryId:new Types.ObjectId(dto.categoryId)
     }
     const data = await this.productRepository.create(filterData)
     const resdata = new ResData<ProductEntity>(201, "malumot yaratildi.", data)
@@ -32,7 +35,7 @@ export class ProductService implements IProductService{
       throw new NameExist()
     }
   }
-  async update(id: ID, dto: ProductEntity): Promise<ResData<ProductEntity>> {
+  async update(id: ID, dto: UpdateProductDto): Promise<ResData<ProductEntity>> {
     await this.findById(id)
     const data = await this.productRepository.update(id, dto)
     const resdata = new ResData<ProductEntity>(200, "malumot yangilandi.", data)

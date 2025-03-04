@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsOptional, IsString } from "class-validator";
+import { IsInt, IsMongoId, IsOptional, IsString } from "class-validator";
 
 export class UpdateProductDto {
     @ApiProperty({type:String})
@@ -16,4 +16,10 @@ export class UpdateProductDto {
     @IsInt()
     @IsOptional()
     count:number
+
+    @ApiProperty({type:String})
+    @IsString()
+    @IsOptional()
+    @IsMongoId()
+    categoryId:string
 }
