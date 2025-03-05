@@ -17,3 +17,9 @@ export class UserNotFound extends HttpException{
         super("Bunday user topilmadi!", HttpStatus.NOT_FOUND)
     }
 }
+
+export class EmailNotFound extends HttpException {
+    constructor(){
+        super("Bu email mavjud emas!", HttpStatus.BAD_REQUEST)
+    }
+}

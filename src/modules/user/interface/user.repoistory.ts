@@ -9,4 +9,5 @@ export interface IUserRepository {
     update(id:ID, dto:UserEntity):Promise<UserEntity | null>
     delete(id:ID):Promise<UserEntity | null>
     findById(id:ID):Promise<UserEntity | null>
+    email(em:string):Promise<UserEntity | null>
 }

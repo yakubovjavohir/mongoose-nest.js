@@ -6,7 +6,6 @@ import { CategoryEntity } from './entities/category.entity';
 import { CategoryRepository } from './category.repository';
 import { NameExist, CategoryNotFound } from './exception/error';
 import { ID } from 'src/common/types';
-import { Types } from 'mongoose';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 
 @Injectable()

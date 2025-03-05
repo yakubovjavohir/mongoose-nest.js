@@ -18,7 +18,6 @@ export class UserRepository implements IUserRepository {
     }
     async emailExist(email: string): Promise<UserEntity | null> {
         const data = await this.userModel.findOne({where : {email}})
-        console.log(data);
         return data 
     }
     async update(id: string, dto: UpdateUserDto): Promise<UserEntity | null> {
@@ -33,5 +32,10 @@ export class UserRepository implements IUserRepository {
     async findById(id: ID): Promise<UserEntity | null> {
         const data = await this.userModel.findById(id)
         return data
+    }
+    async email(email: string): Promise<UserEntity | null> {
+        const data = await this.userModel.findOne({ email }).exec()
+        
+        return data 
     }
 }

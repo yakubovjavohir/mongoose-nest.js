@@ -4,7 +4,7 @@ import { IUserService } from './interface/user.service';
 import { ResData } from 'src/lib/resData';
 import { UserEntity } from './entities/user.entity';
 import { UserRepository } from './user.repository';
-import { EmailExist, UserNotFound } from './exception/error';
+import { EmailExist, EmailNotFound, UserNotFound } from './exception/error';
 import { ID } from 'src/common/types';
 
 @Injectable()
@@ -29,6 +29,8 @@ export class UserService implements IUserService{
   }
   async emailExist(email: string): Promise<void> {
     const data = await this.userRepository.emailExist(email)
+    console.log("email", email);
+    
     if(data){
       throw new EmailExist()
     }
@@ -52,5 +54,14 @@ export class UserService implements IUserService{
     }
     const resdata = new ResData<UserEntity>(200, "malumot olindi.", data)
     return resdata
+  }
+  async email(em: string): Promise<ResData<UserEntity>> {
+    const data = await this.userRepository.email(em)
+    if(!data){
+      throw new EmailNotFound()
+    }
+
+    return new ResData<UserEntity>(200, "EMAIL MAVJUD", data)
+
   }
 }

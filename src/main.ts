@@ -5,12 +5,14 @@ import { HttpExceptionFilter } from './lib/exceptionsFilter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
+  app.setGlobalPrefix("api")
   const httpAdapter = app.get(HttpAdapterHost)
   app.useGlobalFilters(new HttpExceptionFilter(httpAdapter))
   const config = new DocumentBuilder()
   .setTitle('Cats example')
   .setDescription('The cats API description')
   .setVersion('1.0')
+  .addBearerAuth()
   .addTag('cats')
   .build();
 const documentFactory = () => SwaggerModule.createDocument(app, config);
